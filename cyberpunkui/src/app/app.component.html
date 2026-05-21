@@ -1,0 +1,18 @@
+<div class="layout">
+
+  <!-- DESKTOP -->
+  <div class="desktop">
+    <app-desktop></app-desktop>
+  </div>
+
+  <!-- NORMAL TERMINAL PANEL -->
+  <div
+    class="terminal-panel"
+    *ngIf="terminalOpen() && !hackMode()"
+  >
+    <app-terminal
+      (enterHackMode)="hackMode.set(true)"
+    ></app-terminal>
+  </div>
+
+</div>

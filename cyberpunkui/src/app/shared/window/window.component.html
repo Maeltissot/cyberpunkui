@@ -1,0 +1,39 @@
+<div class="window" cdkDrag>
+
+    <div class="titlebar" cdkDragHandle>
+        {{ window.title }}
+
+        <button (click)="close()">
+            X
+        </button>
+    </div>
+
+    <div class="content">
+
+        <ng-container [ngSwitch]="window.file.type">
+
+            <!-- TEXT FILE -->
+            <pre *ngSwitchCase="'text'">
+{{ window.file.content }}
+      </pre>
+
+            <!-- FOLDER -->
+            <div *ngSwitchCase="'folder'">
+                <div class="folder-item" *ngFor="let child of window.file.children" (click)="openChild(child)">
+                    {{ child.name }}
+                </div>
+            </div>
+
+            <!-- 🧠 HACK MINIGAME -->
+            <app-glitch-hack *ngSwitchCase="'hack'"></app-glitch-hack>
+            <app-decrypt-puzzle *ngSwitchCase="'decrypt'" [content]="window.file.content || ''">
+            </app-decrypt-puzzle>
+            <app-network-hack *ngSwitchCase="'network'">
+            </app-network-hack>
+            <app-terminal *ngSwitchCase="'terminal'">
+            </app-terminal>
+        </ng-container>
+
+    </div>
+
+</div>

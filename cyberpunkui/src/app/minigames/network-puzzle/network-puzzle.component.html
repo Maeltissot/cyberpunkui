@@ -1,0 +1,42 @@
+<div class="network-container">
+
+  <div class="hud">
+
+    <div>{{ message }}</div>
+
+    <div class="trace">
+      TRACE {{ trace }}/{{ maxTrace }}
+    </div>
+
+  </div>
+
+  <div class="network">
+
+    <svg class="lines">
+
+      <line
+        *ngFor="let node of nodes"
+        [attr.x1]="node.x"
+        [attr.y1]="node.y"
+        [attr.x2]="nodes[node.connectedTo[0]]?.x"
+        [attr.y2]="nodes[node.connectedTo[0]]?.y"
+      />
+
+    </svg>
+
+    <div
+      *ngFor="let node of nodes"
+      class="node"
+      [class.start]="node.type === 'start'"
+      [class.firewall]="node.type === 'firewall'"
+      [class.target]="node.type === 'target'"
+      [class.active]="node.active"
+      [style.left.px]="node.x"
+      [style.top.px]="node.y"
+      (click)="clickNode(node)"
+    >
+    </div>
+
+  </div>
+
+</div>

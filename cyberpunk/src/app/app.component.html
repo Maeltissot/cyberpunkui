@@ -1,0 +1,130 @@
+<!--
+  
+<div class="viewport" [class.glitch]="glitchActive">
+  <div class="glitch-layer red">Hello good sir</div>
+  <div class="glitch-layer cyan">Second trigger</div>
+  
+  <div class="scanlines"></div>
+  
+  <div class="content">
+    
+    <button class="trigger" (click)="triggerGlitch()">
+      SYSTEM OVERRIDE
+    </button>
+  </div>
+</div>
+-->
+<div class="terminal-wrapper" (click)="focusInput()">
+
+  <!-- ── TOP CHROME ─────────────────────────────── -->
+  <header class="chrome chrome--top">
+    <div class="chrome__left">
+      <span class="dot dot--red"></span>
+      <span class="dot dot--yellow"></span>
+      <span class="dot dot--green"></span>
+    </div>
+    <div class="chrome__title">
+      <span class="title-bracket">[</span>
+      NΞXUS-OS&nbsp;v4.2.1&nbsp;//&nbsp;BLACKWALL&nbsp;EDITION
+      <span class="title-bracket">]</span>
+    </div>
+    <div class="chrome__right">
+      <span class="badge badge--date">{{ currentDate }}</span>
+      <span class="badge badge--time">{{ currentTime }}</span>
+      <span class="badge badge--status">◉ ONLINE</span>
+    </div>
+  </header>
+
+  <!-- ── SIDE DECORATIONS ───────────────────────── -->
+  <div class="side-rail side-rail--left">
+    <div class="rail-label">I/O</div>
+    <div class="rail-bar"></div>
+    <div class="rail-label rail-label--bottom">SYS</div>
+  </div>
+  <div class="side-rail side-rail--right">
+    <div class="rail-label">NET</div>
+    <div class="rail-bar"></div>
+    <div class="rail-label rail-label--bottom">ICE</div>
+  </div>
+
+  <!-- ── OUTPUT AREA ────────────────────────────── -->
+  <div class="output-area" #outputArea>
+
+    <!-- Matrix rain overlay -->
+    <div class="matrix-overlay" [class.matrix-overlay--active]="showMatrix">
+      <div class="matrix-col" *ngFor="let col of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]"
+           [style.animation-delay]="(col * 0.17) + 's'">
+        {{ '01アイウエオカキクケコサシスセソ10'.split('').join('\n') }}
+      </div>
+    </div>
+
+    <!-- Console lines -->
+    <div class="line-container">
+      <div
+        *ngFor="let line of lines; trackBy: trackLine"
+        class="line"
+        [ngClass]="'line--' + line.type">
+
+        <!-- Input echo gets a prompt marker -->
+        <ng-container *ngIf="line.type === 'input'">
+          <span class="prompt">
+            <span class="prompt__user">ghost&#64;nexus</span><span class="prompt__sep">:</span><span class="prompt__path">~</span><span class="prompt__dollar">$</span>
+          </span>
+          <span class="line__text">{{ line.text }}</span>
+          <span class="line__timestamp" *ngIf="line.timestamp">&nbsp;[{{ line.timestamp }}]</span>
+        </ng-container>
+
+        <!-- ASCII art -->
+        <ng-container *ngIf="line.type === 'ascii'">
+          <pre class="ascii-art">{{ line.text }}</pre>
+        </ng-container>
+
+        <!-- Regular lines -->
+        <ng-container *ngIf="line.type !== 'input' && line.type !== 'ascii'">
+          <span class="line__prefix" *ngIf="line.type === 'error'">⚠</span>
+          <span class="line__prefix" *ngIf="line.type === 'success'">▸</span>
+          <span class="line__prefix" *ngIf="line.type === 'system'">║</span>
+          <span class="line__text">{{ line.text }}</span>
+        </ng-container>
+      </div>
+
+      <!-- Empty spacer so last line isn't hidden behind input row -->
+      <div class="spacer"></div>
+    </div>
+  </div>
+
+  <!-- ── INPUT ROW ──────────────────────────────── -->
+  <div class="input-row" [class.input-row--booting]="booting">
+    <span class="prompt">
+      <span class="prompt__user">ghost&#64;nexus</span><span
+        class="prompt__sep">:</span><span
+        class="prompt__path">~</span><span
+        class="prompt__dollar">$</span>
+    </span>
+    <input
+      #inputField
+      class="input-field"
+      type="text"
+      [(ngModel)]="currentInput"
+      (keydown.enter)="submitCommand()"
+      (keydown)="onKeyDown($event)"
+      [disabled]="booting"
+      autocomplete="off"
+      autocorrect="off"
+      spellcheck="false"
+      placeholder="{{ booting ? 'SYSTEM BOOTING…' : '' }}"
+    />
+    <span class="cursor" [class.cursor--on]="cursorBlink">█</span>
+  </div>
+
+  <!-- ── BOTTOM CHROME ──────────────────────────── -->
+  <footer class="chrome chrome--bottom">
+    <span class="stat">MEM&nbsp;73%</span>
+    <span class="stat">CPU&nbsp;41%</span>
+    <span class="stat">NET&nbsp;14.7&nbsp;Gbps</span>
+    <span class="stat stat--warn">⚠ CORP&nbsp;TRACE&nbsp;EVADING</span>
+    <span class="stat stat--ok">ICE&nbsp;ACTIVE</span>
+    <span class="hint">↑↓ history &nbsp;|&nbsp; ENTER submit &nbsp;|&nbsp; type "help"</span>
+  </footer>
+
+</div>

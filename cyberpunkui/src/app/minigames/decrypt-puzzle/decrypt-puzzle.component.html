@@ -1,0 +1,26 @@
+<div class="decrypt-container">
+
+  <div class="hud">
+
+    <div>{{ message }}</div>
+
+    <div class="trace">
+      TRACE {{ trace }}%
+    </div>
+
+  </div>
+
+  <div class="lines">
+
+    <div
+      class="line"
+      *ngFor="let line of scrambledLines; let i = index"
+      [class.selected]="selectedIndex === i"
+      (click)="select(i)"
+    >
+      {{ corruptedLines[i] }}
+    </div>
+
+  </div>
+
+</div>

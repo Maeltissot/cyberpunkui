@@ -1,0 +1,24 @@
+<div class="desktop">
+
+  <div class="scanlines"></div>
+
+  <div class="icons">
+
+    <div
+      class="icon"
+      *ngFor="let file of filesystem.root"
+      (dblclick)="open(file)"
+    >
+      <div class="folder-icon"></div>
+      <span>{{ file.name }}</span>
+    </div>
+
+  </div>
+
+  <app-window
+    *ngFor="let window of windowManager.windows()"
+    [window]="window"
+  >
+  </app-window>
+
+</div>

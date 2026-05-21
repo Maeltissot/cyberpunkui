@@ -1,0 +1,22 @@
+<div class="terminal" [class.fullscreen]="fullscreen" (click)="focusInput()">
+
+    <div #scrollContainer class="history">
+
+        <div *ngFor="let line of history" class="line">
+            {{ line }}
+        </div>
+
+    </div>
+
+    <div class="input-bar">
+
+        <span class="prompt">neural&#64;deck:~$</span>
+
+
+        <textarea [(ngModel)]="input" (input)="autoGrow($event)" (keydown.enter)="execute($any($event))"
+            rows="1"></textarea>
+
+
+    </div>
+
+</div>

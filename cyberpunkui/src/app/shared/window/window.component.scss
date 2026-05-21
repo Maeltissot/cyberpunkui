@@ -1,0 +1,93 @@
+.window {
+  position: absolute;
+
+  top: 120px;
+  left: 220px;
+
+  width: 600px;
+  min-height: 320px;
+
+  background: rgba(5, 10, 20, 0.95);
+
+  border: 1px solid #00ffee;
+
+  box-shadow:
+    0 0 10px #00ffee,
+    0 0 40px rgba(0,255,238,0.4);
+
+  backdrop-filter: blur(6px);
+
+  overflow: hidden;
+}
+
+.titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px;
+
+  background: rgba(0,255,238,0.08);
+
+  border-bottom: 1px solid #00ffee;
+
+  cursor: move;
+
+  text-shadow:
+    0 0 8px #00ffee;
+}
+
+.titlebar button {
+  background: transparent;
+  border: 1px solid #ff0055;
+  color: #ff0055;
+
+  cursor: pointer;
+}
+
+.content {
+  padding: 20px;
+
+  white-space: pre-wrap;
+
+  line-height: 1.5;
+}
+
+.folder-item {
+  padding: 10px;
+
+  border-bottom: 1px solid rgba(0,255,238,0.2);
+
+  cursor: pointer;
+}
+
+.folder-item:hover {
+  background: rgba(0,255,238,0.08);
+}
+
+.glitch-frame {
+  animation: flicker 3s infinite;
+}
+
+@keyframes flicker {
+
+  0% {
+    opacity: 1;
+  }
+
+  2% {
+    opacity: 0.95;
+  }
+
+  4% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.98;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

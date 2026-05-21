@@ -1,0 +1,76 @@
+.desktop {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at center, #101820 0%, #050510 70%);
+
+  color: #00ffee;
+  position: relative;
+  overflow: hidden;
+  font-family: monospace;
+}
+
+.icons {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.icon {
+  width: 120px;
+  cursor: pointer;
+  text-align: center;
+
+  user-select: none;
+}
+
+.folder-icon {
+  width: 64px;
+  height: 48px;
+  margin: auto;
+
+  background: linear-gradient(
+    to bottom,
+    #00ffee,
+    #007777
+  );
+
+  clip-path: polygon(
+    0 20%,
+    25% 20%,
+    35% 0,
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+
+  box-shadow:
+    0 0 10px #00ffee,
+    0 0 20px #00ffee;
+}
+
+.icon span {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+
+  text-shadow:
+    0 0 8px #00ffee;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03) 0px,
+    rgba(255,255,255,0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+
+  opacity: 0.15;
+}
