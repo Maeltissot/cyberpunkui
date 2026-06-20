@@ -1,0 +1,65 @@
+<main class="admin-page">
+  <section class="admin-panel">
+    <h1>Admin</h1>
+
+    <div class="spaces">
+      <form
+        class="space"
+        (ngSubmit)="launchWordle()"
+      >
+        <label for="wordle-word">Wordle</label>
+
+        <div class="inline-control">
+          <input
+            id="wordle-word"
+            name="wordleWord"
+            type="text"
+            autocomplete="off"
+            [(ngModel)]="wordleWord"
+          />
+
+          <button type="submit">
+            Wordle
+          </button>
+        </div>
+      </form>
+
+      <form
+        class="space"
+        (ngSubmit)="sendMessage()"
+      >
+        <label for="admin-message">Message</label>
+
+        <textarea
+          id="admin-message"
+          name="messageText"
+          rows="5"
+          [(ngModel)]="messageText"
+        ></textarea>
+
+        <label for="admin-user">User</label>
+
+        <div class="inline-control">
+          <input
+            id="admin-user"
+            name="messageUser"
+            type="text"
+            autocomplete="off"
+            [(ngModel)]="messageUser"
+          />
+
+          <button type="submit">
+            Send
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <p
+      class="status"
+      *ngIf="status"
+    >
+      {{ status }}
+    </p>
+  </section>
+</main>

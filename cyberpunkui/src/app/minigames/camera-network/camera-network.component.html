@@ -1,0 +1,121 @@
+<div class="network">
+    @if (network.loading()) {
+
+    <div class="camera-loading">
+
+        <div class="loading-title">
+            CONNECTING TO CAMERA NETWORK
+        </div>
+
+        <div class="loading-bar">
+            <div class="loading-fill" [style.width.%]="network.loadingProgress()">
+            </div>
+        </div>
+
+        <div class="loading-percent">
+            {{ network.loadingProgress() }}%
+        </div>
+
+        <div class="loading-console">
+            @for (line of network.loadingLines(); track line) {
+            <div class="loading-line">
+                > {{ line }}
+            </div>
+            }
+        </div>
+
+    </div>
+
+    } @else if (network.completed()) {
+
+    <div class="camera-complete">
+        <div class="complete-frame">
+            <div class="complete-signal">SIGNAL_TERMINATED</div>
+            <div class="complete-title">Camera control relinquished</div>
+            <div class="complete-status">ALL CAMERA NODES RELEASED</div>
+        </div>
+    </div>
+
+    } @else {
+
+
+
+    @if(network.errorMessage()) {
+
+    <div class="network-error">
+
+        <div class="network-error-content">
+
+            NETWORK FAILURE
+
+        </div>
+
+        <pre class="network-error-content bordered">
+
+        {{ network.errorMessage() }}
+
+    </pre>
+
+    </div>
+
+    } @else{
+
+    <div class="header">
+
+        CAMERA NETWORK
+
+        <div class="trace">
+
+            TRACE:
+            {{ network.trace() }}%
+
+        </div>
+
+    </div>
+
+    <svg class="connections">
+
+        <ng-container *ngFor="let node of network.nodes()">
+
+            <ng-container *ngFor="
+                    let connection
+                    of node.connections
+                ">
+
+                <line [attr.x1]="node.x" [attr.y1]="node.y" [attr.x2]="getNodeX(connection.targetId)"
+                    [attr.y2]="getNodeY(connection.targetId)">
+                </line>
+
+                @if (shouldShowWeight(connection)) {
+                <text class="connection-weight"
+                    [attr.x]="getConnectionLabelX(node.x, connection.targetId)"
+                    [attr.y]="getConnectionLabelY(node.y, connection.targetId)">
+                    {{ connection.traceCost }}%
+                </text>
+                }
+
+            </ng-container>
+
+        </ng-container>
+
+    </svg>
+
+    <div *ngFor="
+            let node of network.nodes()
+        " class="node" [class.compromised]="
+            node.compromised
+        " [class.target]="
+            node.target
+        " [class.spiked]="
+            network.spikedNodesVisible() && node.spiked
+        " [style.left.px]="node.x" [style.top.px]="node.y" (click)="clickNode(node.id)">
+
+        {{ node.name }}
+
+    </div>
+
+    }
+
+
+    }
+</div>

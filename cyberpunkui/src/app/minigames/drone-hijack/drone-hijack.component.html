@@ -1,0 +1,122 @@
+<div class="hijack">
+  <header class="topbar">
+    <div>
+      <div class="kicker">DRONE ACCESS POINT DEVICES HIJACK</div>
+      <div class="message">{{ message() }}</div>
+    </div>
+
+    <div class="meters">
+      <div class="meter">
+        <span>ALERT</span>
+        <strong>{{ alert() }}%</strong>
+      </div>
+
+      <div class="meter">
+        <span>NODES</span>
+        <strong>{{ taggedCount }}/{{ drones.length }}</strong>
+      </div>
+    </div>
+  </header>
+
+  <section class="playfield">
+    <div class="grid">
+      <button
+        type="button"
+        class="cell"
+        *ngFor="let cell of cells"
+        [class.covered]="isCoveredCell(cell)"
+        [class.target]="isTargetCell(cell)"
+      >
+        <span
+          class="drone-marker"
+          *ngFor="let drone of drones"
+          [class.active]="drone.id === selectedDroneId()"
+          [hidden]="!isDroneCell(cell, drone)"
+        >
+          {{ drone.name }}
+        </span>
+
+        <span
+          class="target-marker"
+          *ngIf="isTargetCell(cell)"
+        >
+          RUNNER
+        </span>
+      </button>
+    </div>
+
+    <aside class="controls">
+      <div class="feeds">
+        <button
+          type="button"
+          class="feed"
+          *ngFor="let drone of drones"
+          [class.active]="drone.id === selectedDroneId()"
+          [class.tagged]="hasTaggedDrone(drone.id)"
+          (click)="selectDrone(drone.id)"
+        >
+          <span>{{ drone.name }}</span>
+          <small>{{ drone.type }}</small>
+          <small class="tag-state">
+            {{ hasTaggedDrone(drone.id) ? 'TAGGED' : 'UNTAGGED' }}
+          </small>
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="ping"
+        (click)="ping()"
+        [disabled]="status() !== 'running'"
+      >
+        Ping Target
+      </button>
+
+      <button
+        type="button"
+        class="reset"
+        *ngIf="status() === 'won'"
+        (click)="reset()"
+      >
+        Restart Hijack
+      </button>
+    </aside>
+  </section>
+
+  <section
+    class="end-screen success"
+    *ngIf="status() === 'won'"
+  >
+    <div class="end-panel">
+      <div class="end-title">ACCESS GRANTED</div>
+
+      <div class="code-output">
+        <div>&gt; compiling_node_tags()</div>
+        <div>&gt; validating_surveillance_chain: OK</div>
+        <div>&gt; courier_route_signature: MATCH</div>
+        <div>&gt; door_control_bus: UNLOCKED</div>
+      </div>
+
+      <p>access granted to doors</p>
+     
+    </div>
+  </section>
+
+  <section
+    class="end-screen failure"
+    *ngIf="status() === 'lost'"
+  >
+    <div class="end-panel">
+      <div class="end-title">SECURITY LOCKDOWN</div>
+
+      <div class="security-text">
+        <div>UNAUTHORIZED DRONE HANDOFF DETECTED</div>
+        <div>REMOTE FEED INJECTION TERMINATED</div>
+        <div>CORPSEC TRACE ROUTE SEALED</div>
+        <div>LOCAL DOOR ACCESS REMAINS DENIED</div>
+      </div>
+
+      <p>Incident packet archived. Operator credentials flagged for review.</p>
+    </div>
+  </section>
+</div>

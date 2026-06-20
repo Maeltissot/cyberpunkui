@@ -6,7 +6,8 @@
 
     <div
       class="icon"
-      *ngFor="let file of filesystem.root"
+      [class.revealed-hidden]="file.hidden"
+      *ngFor="let file of filesystem.visibleRoot()"
       (dblclick)="open(file)"
     >
       <div class="folder-icon"></div>

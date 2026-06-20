@@ -10,4 +10,5 @@ export interface FileNode {
   | 'terminal';
   content?: string;
   children?: FileNode[];
+  hidden?: boolean;
 }

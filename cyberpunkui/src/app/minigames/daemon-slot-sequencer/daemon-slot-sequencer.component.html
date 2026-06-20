@@ -1,0 +1,71 @@
+<div class="sequencer">
+  <header>
+    <div>DAEMON SLOT SEQUENCER</div>
+    <div>TRACE {{ trace }}/{{ maxTrace }}</div>
+  </header>
+
+  <div class="trace-bar">
+    <i [style.width.%]="trace"></i>
+  </div>
+
+  <main>
+    <section class="slots">
+      @for (slot of [0, 1, 2, 3]; track slot) {
+        <button
+          type="button"
+          class="slot"
+          [class.loaded]="slots[slot]"
+          (click)="removeSlot(slot)"
+        >
+          <span>SLOT {{ slot + 1 }}</span>
+          <strong>{{ getDaemon(slots[slot])?.name ?? 'EMPTY' }}</strong>
+        </button>
+      }
+    </section>
+
+    <section class="daemon-list">
+      @for (daemon of daemons; track daemon.id) {
+        <button
+          type="button"
+          class="daemon"
+          [class.inserted]="isLoaded(daemon.id)"
+          [disabled]="state !== 'active' || slots.length >= maxSlots || isLoaded(daemon.id)"
+          (click)="addDaemon(daemon)"
+        >
+          <strong>{{ daemon.name }}</strong>
+          <span>{{ daemon.description }}</span>
+          <i>{{ daemon.cost }} TRACE</i>
+        </button>
+      }
+    </section>
+  </main>
+
+  <section class="console">
+    @for (line of log; track $index) {
+      <div>&gt; {{ line }}</div>
+    }
+  </section>
+
+  <footer>
+    <div>BUFFER {{ slots.length }}/{{ maxSlots }} / COST {{ totalCost }}</div>
+    <div>
+      <button type="button" [disabled]="state !== 'active'" (click)="execute()">
+        Execute Chain
+      </button>
+    </div>
+  </footer>
+
+  @if (state === 'success') {
+    <div class="overlay success">
+      <h1>ROOT WINDOW OPEN</h1>
+      <p>Daemon sequence accepted.</p>
+    </div>
+  }
+
+  @if (state === 'locked') {
+    <div class="overlay locked">
+      <h1>SUBNET LOCKED</h1>
+      <p>Daemon misfire burned the exploit chain.</p>
+    </div>
+  }
+</div>

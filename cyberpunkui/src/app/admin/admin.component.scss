@@ -1,0 +1,125 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  background:
+    linear-gradient(135deg, rgba(0, 255, 238, 0.08), transparent 38%),
+    #030509;
+  color: #00ffee;
+  font-family: monospace;
+}
+
+.admin-page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.admin-panel {
+  width: min(920px, 100%);
+}
+
+h1 {
+  margin: 0 0 18px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.spaces {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.space {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid rgba(0, 255, 238, 0.28);
+  background: rgba(0, 12, 18, 0.82);
+  box-shadow: 0 0 18px rgba(0, 255, 238, 0.08);
+  box-sizing: border-box;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: rgba(0, 255, 238, 0.72);
+  text-transform: uppercase;
+}
+
+.inline-control {
+  display: flex;
+  gap: 10px;
+}
+
+input,
+textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgba(0, 255, 238, 0.36);
+  background: rgba(0, 0, 0, 0.62);
+  color: #00ffee;
+  font: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  margin-bottom: 14px;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #ff00ff;
+  box-shadow: 0 0 0 2px rgba(255, 0, 255, 0.16);
+}
+
+button {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 0, 255, 0.62);
+  background: rgba(255, 0, 255, 0.14);
+  color: #fff;
+  font: inherit;
+  font-size: 13px;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+button:hover,
+button:focus {
+  background: rgba(255, 0, 255, 0.24);
+}
+
+.status {
+  min-height: 18px;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+}
+
+@media (max-width: 720px) {
+  .admin-page {
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .spaces {
+    grid-template-columns: 1fr;
+  }
+
+  .inline-control {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+    min-height: 42px;
+  }
+}

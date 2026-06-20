@@ -1,0 +1,40 @@
+<div class="cyber-container">
+
+  <div class="fiber-space">
+    @for (line of fiberLines; track $index) {
+      <div class="fiber-line"></div>
+    }
+  </div>
+
+  <section class="deck-readout">
+    <div class="deck-kicker">
+      CYBERDECK ONLINE
+    </div>
+
+    <h1>
+      {{ deckName }}
+    </h1>
+
+    <div class="deck-grid">
+      @for (item of statusItems; track item.label) {
+        <div class="status-row">
+          <span>{{ item.label }}</span>
+          <strong>{{ item.value }}</strong>
+        </div>
+      }
+    </div>
+
+    <div class="spec-title">
+      INSTALLED SUBSYSTEMS
+    </div>
+
+    <div class="spec-list">
+      @for (spec of specs; track spec) {
+        <div class="spec-item">
+          {{ spec }}
+        </div>
+      }
+    </div>
+  </section>
+
+</div>

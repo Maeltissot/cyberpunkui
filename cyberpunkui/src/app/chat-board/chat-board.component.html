@@ -1,0 +1,85 @@
+<div class="chat">
+
+  <div class="header">
+    {{ title() }}
+  </div>
+
+  <div class="messages">
+
+    <div
+      class="security-alert"
+      *ngIf="board.activeConversation()?.burned && !breachMessage()"
+    >
+      <div class="alert-title">SECURITY ALERT</div>
+      <div class="trace-line">Tracing signal</div>
+      <div class="trace-loader">
+        <span></span>
+      </div>
+    </div>
+
+    <div
+      class="msg"
+      *ngFor="let m of messages(); let i = index"
+      [class.right]="m.from === rightParticipant()"
+      [class.left]="m.from === leftParticipant()"
+      [class.translating]="translatingIndex() === i"
+    >
+
+      <div class="bubble">
+
+        <div class="meta">
+          <span class="from">{{ m.from }}</span>
+          <span class="time">{{ m.time }}</span>
+        </div>
+
+        <div class="text">
+          {{ m.text }}
+        </div>
+
+        <div
+          class="files"
+          *ngIf="m.files?.length"
+        >
+          <button
+            type="button"
+            class="file"
+            *ngFor="let file of m.files"
+            [class.spiked]="board.activeConversation()?.scanRevealed && file.spiked"
+            [class.clean]="board.activeConversation()?.scanRevealed && !file.spiked"
+            (click)="openFile(file)"
+          >
+            <span>{{ file.name }}</span>
+            <small *ngIf="board.activeConversation()?.scanRevealed">
+              {{ file.spiked ? 'SPIKED' : 'CLEAN' }}
+            </small>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div
+    class="file-viewer"
+    *ngIf="openedFile()"
+  >
+    <div class="file-title">
+      {{ openedFile()?.name }}
+    </div>
+
+    <pre>{{ fileContent() }}</pre>
+
+    <div
+      class="breach"
+      *ngIf="breachMessage()"
+    >
+      <div>{{ breachMessage() }}</div>
+      <div class="breach-bar">
+        <span [style.width.%]="breachProgress()"></span>
+      </div>
+    </div>
+  </div>
+
+</div>

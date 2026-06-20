@@ -1,0 +1,30 @@
+<div class="board">
+
+  <div class="header">
+    // INTERCEPTED DATA STREAM
+  </div>
+
+  <div class="feed">
+
+    <div
+      class="msg"
+      *ngFor="let m of messages()"
+    >
+
+      <span class="time">
+        {{ m.time }}
+      </span>
+
+      <span class="source">
+        {{ m.source }}
+      </span>
+
+      <span class="text">
+        {{ m.text }}
+      </span>
+
+    </div>
+
+  </div>
+
+</div>

@@ -6,13 +6,10 @@ import {
     ViewChild,
     AfterViewChecked,
     AfterViewInit,
-    Input,
-    Output,
-    EventEmitter,
-    effect
+    Input
 } from '@angular/core';
 import { CommandService } from '../services/command.service';
-import { DisplayLoadingBarEvent, TextTerminalEvent } from '../Constants';
+import { DisplayLoadingBarEvent, TextTerminalEvent } from '../constants';
 
 @Component({
     selector: 'app-terminal',
@@ -71,6 +68,12 @@ export class TerminalComponent implements AfterViewInit {
     ];
 
     ngAfterViewInit() {
+        this.history = [
+            ...this.history,
+            `CACHE LEVEL: ${this.commandService.game.level().toUpperCase()}`,
+            `AVAILABLE: ${this.commandService.visibleCommandNames().join(', ')}`
+        ];
+
         this.focusInput();
     }
     ngAfterViewChecked() {
@@ -93,7 +96,7 @@ export class TerminalComponent implements AfterViewInit {
     async execute(event: KeyboardEvent) {
 
         event.preventDefault();
-
+        debugger;
         const raw =
             this.input.trim();
 

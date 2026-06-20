@@ -1,9 +1,56 @@
-<div class="layout">
+<router-outlet *ngIf="isAdminRoute()"></router-outlet>
+
+<div
+  class="layout"
+  *ngIf="!isAdminRoute()"
+>
 
   <!-- DESKTOP -->
-  <div class="desktop">
-    <app-desktop></app-desktop>
-  </div>
+<div class="game-panel">
+  <app-desktop
+  *ngIf="game.scene() === 'desktop'"
+  />
+  
+  <app-cyberspace
+  *ngIf="game.scene() === 'cyberspace'"
+  />
+  
+  <app-chat-board
+  *ngIf="game.scene() === 'message'"
+  />
+  
+  <app-investigation
+  *ngIf="game.scene() === 'investigation'"
+  />
+
+  <app-camera-network
+    *ngIf="game.scene() === 'cameraNetwork'"
+  />
+
+  <app-drone-hijack
+    *ngIf="game.scene() === 'droneHijack'"
+  />
+
+  <app-implant-calibration
+    *ngIf="game.scene() === 'implantCalibration'"
+  />
+
+  <app-trace-firewall-chase
+    *ngIf="game.scene() === 'traceFirewall'"
+  />
+
+  <app-social-engineering-hack
+    *ngIf="game.scene() === 'socialHack'"
+  />
+
+  <app-daemon-slot-sequencer
+    *ngIf="game.scene() === 'daemonSequencer'"
+  />
+
+  
+</div>
+  
+
 
   <!-- NORMAL TERMINAL PANEL -->
   <div
@@ -16,3 +63,11 @@
   </div>
 
 </div>
+
+<app-intrusion-modal
+  *ngIf="intrusion.active()">
+</app-intrusion-modal>
+
+<app-ghost-message
+    *ngIf="ghost.visible()">
+</app-ghost-message>

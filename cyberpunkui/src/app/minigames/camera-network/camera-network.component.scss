@@ -1,0 +1,384 @@
+.network {
+
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    background:
+        radial-gradient(
+            circle,
+            #031318,
+            #000
+        );
+
+    overflow: hidden;
+}
+
+.header {
+
+    height: 50px;
+    width: 100%;
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    color: #00ffee;
+
+    font-family: monospace;
+
+    border-bottom:
+        1px solid rgba(
+            0,
+            255,
+            238,
+            .2
+        );
+}
+
+.trace {
+
+    color: #ff0066;
+}
+
+.connections {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+line {
+
+    stroke: rgba(
+        0,
+        255,
+        238,
+        .2
+    );
+
+    stroke-width: 2;
+}
+
+.connection-weight {
+
+    fill: #00ffee;
+    stroke: rgba(0, 0, 0, .85);
+    stroke-width: 4px;
+    paint-order: stroke;
+
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: 700;
+
+    text-anchor: middle;
+    dominant-baseline: middle;
+
+    pointer-events: none;
+}
+
+.node {
+
+    position: absolute;
+
+    width: 140px;
+
+    height: 50px;
+
+    margin-left: -70px;
+
+    margin-top: -25px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    color: #00ffee;
+
+    font-family: monospace;
+
+    border:
+        1px solid
+        rgba(
+            0,
+            255,
+            238,
+            .4
+        );
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .7
+        );
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.node:hover {
+
+    box-shadow:
+        0 0 20px
+        rgba(
+            0,
+            255,
+            238,
+            .5
+        );
+}
+
+.compromised {
+
+    background:
+        rgba(
+            0,
+            255,
+            180,
+            .15
+        );
+
+    border-color:
+        #00ffee;
+}
+
+.target {
+
+    border-color:
+        #ff0066;
+
+    color:
+        #ff0066;
+}
+
+.spiked {
+
+    color: #ff003c;
+    border-color: #ff003c;
+
+    background:
+        repeating-linear-gradient(
+            -8deg,
+            rgba(255, 0, 60, .28) 0,
+            rgba(255, 0, 60, .28) 4px,
+            rgba(0, 0, 0, .78) 4px,
+            rgba(0, 0, 0, .78) 9px
+        );
+
+    box-shadow:
+        0 0 18px rgba(255, 0, 60, .65),
+        inset 0 0 16px rgba(255, 0, 60, .25);
+
+    animation: spikeGrizzle .18s steps(2, end) infinite;
+}
+
+@keyframes spikeGrizzle {
+    0% {
+        transform: translate(0, 0);
+        filter: contrast(1.2);
+    }
+
+    50% {
+        transform: translate(1px, -1px);
+        filter: contrast(1.8) saturate(1.7);
+    }
+
+    100% {
+        transform: translate(-1px, 1px);
+        filter: contrast(1.3);
+    }
+}
+
+.network-error{
+    display: flex;
+    align-self: center;
+    color: red;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    align-content: cent
+}
+
+.network-error-content{
+    align-self: center;
+    text-align: center;
+}
+.bordered{
+    border: red 1px;
+    border: solid;
+    border-radius: 10%;
+    border-top-width: medium;
+    margin: 2px;
+}
+
+.camera-loading {
+    width: 100%;
+    height: 100%;
+
+    background:
+        radial-gradient(circle at center, #031318, #000);
+
+    color: #00ffee;
+    font-family: monospace;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 40px;
+}
+
+.loading-title {
+    text-align: center;
+    font-size: 22px;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+
+    animation: flicker 1s infinite;
+}
+
+.loading-bar {
+    height: 26px;
+    border: 1px solid #00ffee;
+    background: rgba(0,0,0,.7);
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.loading-fill {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(0,255,238,.2),
+        #00ffee
+    );
+
+    transition: width .4s ease;
+    box-shadow: 0 0 20px #00ffee;
+}
+
+.loading-percent {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.loading-console {
+    height: 180px;
+    overflow: hidden;
+
+    border: 1px solid rgba(0,255,238,.25);
+    background: rgba(0,0,0,.45);
+
+    padding: 14px;
+}
+
+.loading-line {
+    margin-bottom: 6px;
+    color: #00ffee;
+
+    animation: lineIn .25s ease-out;
+}
+
+@keyframes lineIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes flicker {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .45;
+    }
+}
+
+.camera-complete {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00ffee;
+    font-family: monospace;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(0, 255, 238, .025) 0,
+            rgba(0, 255, 238, .025) 1px,
+            transparent 1px,
+            transparent 4px
+        ),
+        radial-gradient(circle at center, #06252a, #000 68%);
+    animation: completeBoot .45s steps(3, end) both;
+}
+
+.complete-frame {
+    width: min(680px, 80%);
+    padding: 52px 30px;
+    text-align: center;
+    border: 1px solid rgba(0, 255, 238, .65);
+    box-shadow:
+        0 0 20px rgba(0, 255, 238, .35),
+        inset 0 0 35px rgba(0, 255, 238, .08);
+}
+
+.complete-signal {
+    margin-bottom: 18px;
+    color: #ff3bd4;
+    letter-spacing: .2em;
+}
+
+.complete-title {
+    font-size: clamp(24px, 4vw, 42px);
+    letter-spacing: .08em;
+    text-shadow:
+        0 0 10px #00ffee,
+        0 0 28px rgba(0, 255, 238, .75);
+}
+
+.complete-status {
+    margin-top: 20px;
+    color: rgba(0, 255, 238, .65);
+    letter-spacing: .14em;
+}
+
+@keyframes completeBoot {
+    0% {
+        opacity: 0;
+        transform: scaleY(.05);
+        filter: brightness(4);
+    }
+
+    55% {
+        opacity: 1;
+        transform: scaleY(1.04);
+    }
+
+    100% {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+}

@@ -1,9 +1,12 @@
 .layout {
+  display: flex;
+  flex-direction: row;
   width: 100%;
   height: 100dvh;
   display: flex 1 0;
   position: relative;
   overflow: hidden;
+  justify-content: space-between;
 }
 
 /* desktop layer */
@@ -14,21 +17,19 @@
 
 /* side panel mode */
 .terminal-panel {
-  position: absolute;
+  position: relative;
   right: 0;
   top: 0;
+  flex: 0 0 420px;
   width: 420px;
   height: 100%;
 
   background: rgba(0,0,0,0.95);
 }
 
-/* FULLSCREEN HACK MODE */
-.terminal-overlay {
-  position: absolute;
-  inset: 0;
-
-  z-index: 9999;
-
-  background: rgba(0,0,0,0.98);
+.game-panel{
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
 }

@@ -1,0 +1,83 @@
+<div class="firewall-chase">
+  <div class="hud">
+    <div>
+      TRACE FIREWALL CHASE
+    </div>
+
+    <div class="message">
+      {{ message }}
+    </div>
+
+    <div class="trace">
+      TRACE {{ trace }}/{{ maxTrace }}
+    </div>
+  </div>
+
+  @if (phase === 'stage-1' || phase === 'stage-2') {
+    <div class="trace-bar">
+      <div
+        class="trace-fill"
+        [style.width.%]="trace"
+      ></div>
+    </div>
+
+    <div class="arena">
+      <div
+        class="grid"
+        [class.stage-two]="phase === 'stage-2'"
+      >
+        @for (cell of cells; track cell.x + ':' + cell.y) {
+          <div
+            class="cell"
+            [class.blocked]="cell.blocked"
+            [class.target]="isTarget(cell)"
+            [class.swept]="isSwept(cell)"
+            [class.player]="isPlayer(cell)"
+          >
+            @if (isPlayer(cell)) {
+              <span class="signal"></span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="footer">
+      ARROW KEYS ONLY / MOVES {{ moves }} / {{ phase === 'stage-1' ? 'FIRST WALL' : 'SECOND WALL' }}
+    </div>
+  }
+
+  @if (phase === 'turrets') {
+    <div class="turret-screen">
+      @for (turret of turrets; track turret; let i = $index) {
+        <section class="turret">
+          <div>
+            <h2>{{ turret }}</h2>
+            <p>{{ turretStates[i].toUpperCase() }}</p>
+          </div>
+
+          <div class="turret-actions">
+            <button type="button" (click)="overrideTurret(i, 'distracted')">
+              Distract
+            </button>
+            <button type="button" (click)="overrideTurret(i, 'shutdown')">
+              Shutdown
+            </button>
+            <button type="button" (click)="overrideTurret(i, 'malfunction')">
+              Malfunction
+            </button>
+          </div>
+        </section>
+      }
+    </div>
+  }
+
+  @if (phase === 'locked') {
+    <div class="lock-overlay">
+      <div>
+        <h1>ENTRY COMPLETELY LOCKED</h1>
+        <p>Firewall authority has sealed the access vector.</p>
+      </div>
+    </div>
+  }
+</div>

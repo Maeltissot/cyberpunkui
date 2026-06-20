@@ -1,0 +1,37 @@
+<div
+    class="ghost-container"
+    (click)="close()">
+
+    <div class="portrait">
+
+        <div class="head"></div>
+
+    </div>
+
+    <div class="message">
+
+        <div class="sender">
+
+            {{ ghost.message()?.sender }}
+
+        </div>
+
+        <div class="text">
+
+            {{ displayedText() }}
+
+            <span class="cursor">
+                █
+            </span>
+
+        </div>
+
+        <div class="hint">
+
+            CLICK TO DISMISS
+
+        </div>
+
+    </div>
+
+</div>

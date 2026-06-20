@@ -1,0 +1,87 @@
+<div class="calibration">
+  <header class="topbar">
+    <div>
+      <div class="kicker">TURRET CALIBRATION</div>
+      <div class="message">{{ message() }}</div>
+    </div>
+
+    <div class="instability">
+      <span>INSTABILITY</span>
+      <strong>{{ instability() }}%</strong>
+    </div>
+  </header>
+
+  <section class="channels">
+    <div
+      class="channel"
+      *ngFor="let channel of channels()"
+      [class.aligned]="isAligned(channel)"
+    >
+      <div class="channel-head">
+        <span>{{ channel.name }}</span>
+        <strong>{{ channel.value }}</strong>
+      </div>
+
+      <div class="wave">
+        <span
+          class="target-band"
+          [style.left.%]="targetStart(channel)"
+          [style.width.%]="targetWidth(channel)"
+        ></span>
+
+        <span
+          class="pulse"
+          [style.left.%]="channel.value"
+        ></span>
+      </div>
+
+      <input
+        type="range"
+        min="0"
+        max="100"
+        [ngModel]="channel.value"
+        (ngModelChange)="updateChannel(channel.id, $event)"
+        [disabled]="state() !== 'active'"
+      />
+    </div>
+  </section>
+
+  <section class="actions">
+    <button
+      type="button"
+      (click)="lockCalibration()"
+      [disabled]="state() !== 'active'"
+    >
+      Lock Calibration
+    </button>
+
+    <button
+      type="button"
+      class="secondary"
+      *ngIf="state() !== 'active'"
+      (click)="reset()"
+    >
+      Restart
+    </button>
+  </section>
+
+  <section
+    class="end-screen success"
+    *ngIf="state() === 'success'"
+  >
+    <div class="end-panel">
+      <div class="end-title">CALIBRATION STABLE</div>
+      <p>Motor response, optic bus, and limbic filter are synchronized.</p>
+    </div>
+  </section>
+
+  <section
+    class="end-screen failed"
+    *ngIf="state() === 'failed'"
+  >
+    <div class="end-panel">
+      <div class="end-title">CALIBRATION FAILED</div>
+      <p>Neural waveform destabilized before the implant accepted the handshake.</p>
+    </div>
+  </section>
+</div>

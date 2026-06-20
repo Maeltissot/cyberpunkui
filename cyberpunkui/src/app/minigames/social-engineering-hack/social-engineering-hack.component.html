@@ -1,0 +1,61 @@
+<div class="social-hack">
+  <header>
+    <div>SOCIAL ENGINEERING CHAT HACK</div>
+    <div>{{ target }}</div>
+  </header>
+
+  <section class="meters">
+    <div>
+      <span>TRUST</span>
+      <div class="bar">
+        <i class="trust" [style.width.%]="trust"></i>
+      </div>
+    </div>
+
+    <div>
+      <span>SUSPICION</span>
+      <div class="bar">
+        <i class="suspicion" [style.width.%]="suspicion"></i>
+      </div>
+    </div>
+  </section>
+
+  <main class="chat-log">
+    @for (line of lines; track $index) {
+      <div
+        class="line"
+        [class.deck]="line.speaker === 'deck'"
+        [class.target]="line.speaker === 'target'"
+        [class.system]="line.speaker === 'system'"
+      >
+        <span>{{ line.speaker.toUpperCase() }}</span>
+        <p>{{ line.text }}</p>
+      </div>
+    }
+  </main>
+
+  @if (state === 'active') {
+    <section class="choices">
+      @for (choice of choices; track choice.text) {
+        <button type="button" (click)="choose(choice)">
+          {{ choice.text }}
+        </button>
+      }
+    </section>
+  }
+
+  @if (state === 'success') {
+    <section class="result success">
+      <h1>CREDENTIAL CAPTURED</h1>
+      <p>{{ credential }}</p>
+      <button type="button" (click)="restart()">Restart</button>
+    </section>
+  }
+
+  @if (state === 'failed') {
+    <section class="result failed">
+      <h1>CHANNEL SEALED</h1>
+      <p>Target stopped responding. Social vector is no longer available.</p>
+    </section>
+  }
+</div>

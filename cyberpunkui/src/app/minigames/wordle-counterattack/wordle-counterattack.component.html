@@ -1,0 +1,107 @@
+<div class="overlay" [class.closing]="closing()" [class.fail]="failMode()" [class.glitch]="redGlitch()">
+
+    <!-- MATRIX BACKGROUND -->
+
+    <canvas #matrixCanvas class="matrix" [class.red]="mode() === 'fail'" [class.glitch]="mode() === 'fail'"></canvas>
+
+    <!-- MODAL -->
+
+    <div class="modal">
+
+        <!-- WORDLE PHASE -->
+
+        <ng-container *ngIf="mode() === 'play'">
+
+            <div class="alert">
+                ⚠ COUNTER INTRUSION DETECTED ⚠
+            </div>
+
+            <div class="subtitle">
+                IDENTIFY ENCRYPTION KEY
+            </div>
+
+            <div class="attempts">
+                ATTEMPTS REMAINING:
+                {{ intrusion.attempts() }}
+            </div>
+
+            <div class="board">
+
+                <div class="row" *ngFor="let guess of guesses()">
+
+                    <div class="tile" *ngFor="
+                            let letter of guess.split('');
+                            let i = index
+                        " [class.correct]="getLetterState(letter, i, guess) === 'correct'"
+                        [class.present]="getLetterState(letter, i, guess) === 'present'"
+                        [class.wrong]="getLetterState(letter, i, guess) === 'wrong'">
+
+                        {{ letter }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <input #guessInput class="guess-input" [(ngModel)]="currentGuess" (keyup.enter)="submit()"
+                autocomplete="off" spellcheck="false" placeholder="ENTER ACCESS KEY" />
+
+        </ng-container>
+
+        <!-- SUCCESS PHASE -->
+
+        <ng-container *ngIf="mode() === 'success'">
+
+            <div class="success-title">
+                ACCESS KEY VERIFIED
+            </div>
+
+            <div class="success-subtitle">
+                DEPLOYING COUNTERMEASURES
+            </div>
+
+            <div class="loading-container">
+
+                <div class="loading-fill" [style.width.%]="progress()">
+                </div>
+
+            </div>
+
+            <div class="progress-text">
+                {{ progress() }}%
+            </div>
+
+            <div class="counter-log">
+
+                <div *ngFor="let line of countermeasureLines()" class="counter-line">
+
+                    > {{ line }}
+
+                </div>
+
+            </div>
+
+        </ng-container>
+
+        <!-- FAILURE PHASE -->
+
+        <ng-container *ngIf="mode() === 'fail'">
+
+            <div class="fail-title">
+                INTRUSION FAILED
+            </div>
+
+            <div class="fail-console">
+
+                <div *ngFor="let line of failLines()" class="error-counter-line">
+                    > {{ line }}
+                </div>
+
+            </div>
+
+        </ng-container>
+
+    </div>
+
+</div>

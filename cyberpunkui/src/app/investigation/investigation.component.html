@@ -1,0 +1,52 @@
+<div class="investigation">
+
+  <div class="header">
+    // FORENSIC CHAT EXTRACTION NODE
+  </div>
+
+  <div class="messages">
+
+    <div
+  class="msg"
+  *ngFor="let m of investigation.messages()"
+  [class.right]="m.orientation === 'right'"
+  [class.left]="m.orientation === 'left'"
+>
+      <div class="bubble">
+
+      <div class="meta">
+        <span>{{ m.from }}</span>
+        →
+        <span>{{ m.to }}</span>
+      </div>
+
+      <div class="text">
+
+        <ng-container [ngSwitch]="m.state">
+
+          <div *ngSwitchCase="'locked'">
+            █████████████████████
+          </div>
+
+          <div *ngSwitchCase="'partial'">
+            {{ m.decryptedText }}
+          </div>
+
+          <div *ngSwitchCase="'decrypted'">
+            {{ m.rawText }}
+          </div>
+
+        </ng-container>
+
+      </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="terminal-hint">
+    ENTER COMMAND: scan | decrypt | correlate
+  </div>
+
+</div>

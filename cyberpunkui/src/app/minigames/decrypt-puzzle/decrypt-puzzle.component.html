@@ -1,26 +1,33 @@
 <div class="decrypt-container">
+  <ng-container [ngSwitch]="view">
+    <div *ngSwitchCase="'puzzle'">
+      <div class="hud">
+        <div>{{ message }}</div>
+        <div class="trace">TRACE {{ trace }}%</div>
+      </div>
 
-  <div class="hud">
-
-    <div>{{ message }}</div>
-
-    <div class="trace">
-      TRACE {{ trace }}%
+      <div class="lines">
+        <div
+          class="line"
+          *ngFor="let line of scrambledLines; let i = index"
+          [class.selected]="selectedIndex === i"
+          (click)="select(i)"
+        >
+          {{ corruptedLines[i] }}
+        </div>
+      </div>
     </div>
 
-  </div>
-
-  <div class="lines">
-
-    <div
-      class="line"
-      *ngFor="let line of scrambledLines; let i = index"
-      [class.selected]="selectedIndex === i"
-      (click)="select(i)"
-    >
-      {{ corruptedLines[i] }}
+    <div *ngSwitchCase="'success'" class="success-screen">
+      <div class="success-icon">ACCESS_GRANTED</div>
+      <div class="success-title">DECRYPTION SUCCESSFUL</div>
+      <div class="success-status">EXTRACTING MEMORY PAYLOAD<span class="cursor">_</span></div>
+      <div class="success-bar"><div class="success-fill"></div></div>
     </div>
 
-  </div>
-
+    <div *ngSwitchCase="'payload'" class="payload-screen">
+      <div class="payload-header">MEMORY FRAGMENT // RECOVERED PAYLOAD</div>
+      <pre>{{ content }}</pre>
+    </div>
+  </ng-container>
 </div>

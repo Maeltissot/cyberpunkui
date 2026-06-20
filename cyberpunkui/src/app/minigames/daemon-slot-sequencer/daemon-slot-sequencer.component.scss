@@ -1,0 +1,160 @@
+.sequencer {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  color: #00ffee;
+  font-family: monospace;
+  background: radial-gradient(circle at 50% 20%, rgba(0, 255, 238, .13), transparent 34%), #030409;
+}
+
+header,
+footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #fff;
+}
+
+header div:last-child {
+  color: #ff0066;
+}
+
+.trace-bar {
+  height: 10px;
+  border: 1px solid rgba(255, 0, 102, .55);
+  background: rgba(0, 0, 0, .58);
+}
+
+.trace-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #00ffee, #ff0066);
+  transition: width .2s ease;
+}
+
+main {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(190px, .8fr) 1.2fr;
+  gap: 12px;
+}
+
+.slots,
+.daemon-list {
+  min-height: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.daemon-list {
+  overflow: auto;
+}
+
+button {
+  border: 1px solid rgba(0, 255, 238, .34);
+  color: #00ffee;
+  background: rgba(0, 0, 0, .64);
+  font-family: monospace;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.inserted {
+  filter: grayscale(1);
+}
+
+.slot,
+.daemon {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  padding: 12px;
+}
+
+.slot {
+  justify-content: center;
+}
+
+.loaded {
+  border-color: #00ffb4;
+  box-shadow: inset 0 0 18px rgba(0, 255, 180, .15);
+}
+
+.slot span,
+.daemon span,
+.daemon i {
+  color: rgba(202, 255, 251, .7);
+  font-style: normal;
+}
+
+.daemon strong {
+  color: #fff;
+}
+
+.console {
+  height: 118px;
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid rgba(0, 255, 238, .22);
+  background: rgba(0, 0, 0, .48);
+  color: rgba(202, 255, 251, .78);
+}
+
+footer button {
+  min-height: 34px;
+  margin-left: 8px;
+  padding: 0 12px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, .82);
+  text-align: center;
+}
+
+.overlay h1 {
+  margin: 0 0 10px;
+  font-size: clamp(32px, 6vw, 68px);
+}
+
+.success {
+  color: #00ffb4;
+}
+
+.locked {
+  color: #ff003c;
+  animation: glitch .14s steps(2, end) infinite;
+}
+
+@keyframes glitch {
+  50% {
+    filter: contrast(1.8);
+    transform: translate(1px, -1px);
+  }
+}
+
+@media (max-width: 760px) {
+  main,
+  header,
+  footer {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+}
