@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IntrusionService } from '../services/intrusion.service';
-import { GhostMessageService } from '../services/message.service';
+import { ApiBaseUrl } from '../constants';
 
 @Component({
   selector: 'app-admin',
@@ -25,8 +25,7 @@ export class AdminComponent {
   status = '';
 
   constructor(
-    private intrusion: IntrusionService,
-    private ghostMessage: GhostMessageService
+    private http: HttpClient
   ) { }
 
   launchWordle() {
@@ -38,9 +37,17 @@ export class AdminComponent {
       return;
     }
 
-    this.intrusion.trigger(word);
-    this.status = `Wordle launched with "${word.toUpperCase()}".`;
-    this.wordleWord = '';
+    this.http
+      .post(`${ApiBaseUrl}/api/wordle`, { word })
+      .subscribe({
+        next: () => {
+          this.status = `Wordle launched with "${word.toUpperCase()}".`;
+          this.wordleWord = '';
+        },
+        error: () => {
+          this.status = 'Unable to launch Wordle from the backend.';
+        }
+      });
   }
 
   sendMessage() {
@@ -55,8 +62,16 @@ export class AdminComponent {
       return;
     }
 
-    this.ghostMessage.show(user, message);
-    this.status = `Message sent as ${user}.`;
-    this.messageText = '';
+    this.http
+      .post(`${ApiBaseUrl}/api/message`, { user, message })
+      .subscribe({
+        next: () => {
+          this.status = `Message sent as ${user}.`;
+          this.messageText = '';
+        },
+        error: () => {
+          this.status = 'Unable to send message from the backend.';
+        }
+      });
   }
 }

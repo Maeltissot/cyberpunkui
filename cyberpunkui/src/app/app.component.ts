@@ -18,6 +18,7 @@ import { SocialEngineeringHackComponent } from './minigames/social-engineering-h
 import { DaemonSlotSequencerComponent } from './minigames/daemon-slot-sequencer/daemon-slot-sequencer.component';
 import { DroneHijackComponent } from './minigames/drone-hijack/drone-hijack.component';
 import { ImplantCalibrationComponent } from './minigames/implant-calibration/implant-calibration.component';
+import { GameRealtimeService } from './services/game-realtime.service';
 
 @Component({
   selector: 'app-root',
@@ -45,8 +46,11 @@ export class AppComponent {
     public game: GameStateService,
     public intrusion: IntrusionService,
     public ghost: GhostMessageService,
-    public cameraNetwork: CameraNetworkService
-  ) { }
+    public cameraNetwork: CameraNetworkService,
+    private realtime: GameRealtimeService
+  ) {
+    void this.realtime;
+  }
   terminalOpen = signal(true);
 
   hackMode = signal(false); // 👈 FULLSCREEN HACK MODE
