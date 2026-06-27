@@ -1,0 +1,25 @@
+@Cyberpunk_HostAddress = http://localhost:5020
+
+GET {{Cyberpunk_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{Cyberpunk_HostAddress}}/api/wordle
+Content-Type: application/json
+
+{
+  "word": "cyber"
+}
+
+###
+
+POST {{Cyberpunk_HostAddress}}/api/message
+Content-Type: application/json
+
+{
+  "user": "UNKNOWN",
+  "message": "Hey chum... I know you, we need to talk."
+}
+
+###

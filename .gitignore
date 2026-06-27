@@ -1,0 +1,61 @@
+# Frontend dependencies and build output
+cyberpunkui/Front/node_modules/
+cyberpunkui/Front/dist/
+cyberpunkui/Front/tmp/
+cyberpunkui/Front/out-tsc/
+cyberpunkui/Front/bazel-out/
+cyberpunkui/Front/.angular/cache/
+cyberpunkui/Front/coverage/
+cyberpunkui/Front/.agents/
+cyberpunkui/Front/.codex/
+
+# Backend build output
+cyberpunkui/Back/bin/
+cyberpunkui/Back/obj/
+cyberpunkui/Back/net*/
+cyberpunk/Back/bin/
+cyberpunk/Back/obj/
+cyberpunk/Back/net*/
+cyberpunk/Cyberpunk/**/bin/
+cyberpunk/Cyberpunk/**/obj/
+*.nupkg
+*.snupkg
+
+# Package manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDEs and editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+*.sublime-workspace
+.history/
+.agents/
+.codex/
+
+# Rider and ReSharper
+_ReSharper.Caches/
+*.DotSettings.user
+riderModule.iml
+
+# Local HTTP client and data-source files
+httpRequests/
+dataSources/
+dataSources.local.xml
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -1,15 +1,32 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# Frontend dependencies and build output
+/Front/node_modules/
+/Front/dist/
+/Front/tmp/
+/Front/out-tsc/
+/Front/bazel-out/
+/Front/.angular/cache/
+/Front/coverage/
+/Front/.agents/
+/Front/.codex/
+/Front/.sass-cache/
+/Front/connect.lock
+/Front/libpeerconnection.log
+/Front/testem.log
+/Front/typings/
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Backend build output
+/Back/bin/
+/Back/obj/
+/Back/net*/
+/Back/packages/
+*.nupkg
+*.snupkg
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Package manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # IDEs and editors
 .idea/
@@ -19,6 +36,9 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
+.history/
+.agents/
+.codex/
 
 # Visual Studio Code
 .vscode/*
@@ -26,17 +46,19 @@ yarn-error.log
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+# Rider and ReSharper
+_ReSharper.Caches/
+*.DotSettings.user
+riderModule.iml
 
-# System files
+# Local HTTP client and data-source files
+httpRequests/
+dataSources/
+dataSources.local.xml
+
+# OS files
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Desktop.ini
