@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CyberpunkUi", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200")
+            .SetIsOriginAllowed(IsAllowedOrigin)
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -92,6 +92,19 @@ app.MapPost("/api/message", async (MessageRequest request, IHubContext<GameHub> 
     .WithName("TriggerMessage");
 
 app.Run();
+
+static bool IsAllowedOrigin(string origin)
+{
+    if (!Uri.TryCreate(origin, UriKind.Absolute, out var uri))
+    {
+        return false;
+    }
+
+    return
+        uri.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) ||
+        uri.Host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase) ||
+        uri.Host.EndsWith(".azurestaticapps.net", StringComparison.OrdinalIgnoreCase);
+}
 
 record WordleRequest(string? Word);
 
