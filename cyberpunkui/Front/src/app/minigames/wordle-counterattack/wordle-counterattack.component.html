@@ -45,7 +45,7 @@
             </div>
 
             <input #guessInput class="guess-input" [(ngModel)]="currentGuess" (keyup.enter)="submit()"
-                autocomplete="off" spellcheck="false" placeholder="ENTER ACCESS KEY" />
+                autocomplete="off" spellcheck="false" [placeholder]="guessPlaceholder" />
 
         </ng-container>
 

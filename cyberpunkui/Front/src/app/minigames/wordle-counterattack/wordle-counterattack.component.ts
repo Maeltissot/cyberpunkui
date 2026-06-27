@@ -51,6 +51,14 @@ export class WordleModalComponent implements AfterViewInit {
         public intrusion: IntrusionService
     ) { }
 
+    get guessPlaceholder(): string {
+
+        const letterCount =
+            this.intrusion.targetWord().length;
+
+        return `ENTER ${letterCount} LETTER${letterCount === 1 ? '' : 'S'}`;
+    }
+
     ngAfterViewInit(): void {
 
         this.startMatrix();
