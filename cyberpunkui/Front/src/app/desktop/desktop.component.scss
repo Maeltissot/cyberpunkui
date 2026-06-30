@@ -11,10 +11,23 @@
 }
 
 .icons {
+  position: relative;
+  z-index: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.window-layer {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.window-layer app-window {
+  pointer-events: auto;
 }
 
 .icon {
@@ -83,39 +96,30 @@
     0 0 14px #ff3bd4;
 }
 
+.icon.locked-folder .folder-icon {
+  background: linear-gradient(
+    to bottom,
+    #ffea70,
+    #8f6b00
+  );
+  box-shadow:
+    0 0 10px #ffea70,
+    0 0 24px rgba(255, 234, 112, 0.65);
+}
+
+.icon.locked-folder span {
+  color: #ffea70;
+}
+
 @keyframes hidden-data-reveal {
   0% {
     opacity: 0;
     transform: translate(-18px, 8px) skewX(18deg);
-    filter: blur(8px) brightness(3);
-  }
-
-  20% {
-    opacity: 1;
-    transform: translate(10px, -4px) skewX(-10deg);
-  }
-
-  38% {
-    opacity: 0.25;
-    transform: translate(-7px, 2px) skewX(6deg);
-  }
-
-  58% {
-    opacity: 1;
-    transform: translate(4px, 0) skewX(-3deg);
-    filter: blur(2px) brightness(2);
   }
 
   100% {
     opacity: 1;
     transform: none;
-    filter: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .icon.revealed-hidden {
-    animation: none;
   }
 }
 
@@ -133,4 +137,181 @@
   );
 
   opacity: 0.15;
+}
+
+.login-screen, .firewall-screen, .alarm-screen, .connecting-screen {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(circle, rgba(0,255,238,.08), rgba(5,5,16,.96) 58%);
+}
+
+.login-panel, .connection-panel {
+  width: min(420px, 100%);
+  padding: 20px;
+  border: 1px solid rgba(0,255,238,.68);
+  background: rgba(0,0,0,.72);
+}
+
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  color: rgba(202,255,251,.72);
+}
+
+.login-header strong, .firewall-hud span:nth-child(2) {
+  color: #fff;
+}
+
+.login-panel label, .login-panel p, .connection-panel {
+  color: #00ffee;
+}
+
+.login-panel input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  margin: 8px 0 14px;
+  padding: 8px 10px;
+  border: 1px solid rgba(0,255,238,.58);
+  color: #fff;
+  background: rgba(0,0,0,.72);
+  font: inherit;
+  outline: 0;
+}
+
+.login-panel button {
+  min-height: 38px;
+  padding: 0 18px;
+  border: 1px solid #00ffee;
+  color: #050510;
+  background: #00ffee;
+  font: inherit;
+  cursor: pointer;
+}
+
+.login-panel p {
+  min-height: 20px;
+  margin: 18px 0 0;
+  color: #ffea70;
+}
+
+.firewall-screen {
+  align-content: center;
+  gap: 14px;
+}
+
+.firewall-hud {
+  width: min(620px, 100%);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+}
+
+.firewall-hud span:last-child {
+  color: #ff0055;
+  text-align: right;
+}
+
+.trace-track, .connection-track {
+  width: min(620px, 100%);
+  height: 12px;
+  border: 1px solid rgba(255,0,85,.72);
+  background: rgba(0,0,0,.64);
+}
+
+.trace-fill, .connection-fill {
+  height: 100%;
+  transition: width 160ms ease;
+}
+
+.trace-fill {
+  background: linear-gradient(90deg, #00ffee, #ff0055);
+}
+
+.firewall-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 50px);
+  grid-template-rows: repeat(7, 50px);
+  gap: 6px;
+}
+
+.firewall-cell {
+  position: relative;
+  border: 1px solid rgba(0,255,238,.32);
+  background: rgba(0,255,238,.06);
+}
+
+.firewall-cell.blocked {
+  background: repeating-linear-gradient(45deg, rgba(255,0,85,.28) 0 5px, rgba(0,0,0,.84) 5px 10px);
+  border-color: rgba(255,0,85,.68);
+}
+
+.firewall-cell.swept {
+  box-shadow: inset 0 0 0 999px rgba(255,0,85,.2);
+}
+
+.firewall-cell.target {
+  border-color: #fff;
+}
+
+.firewall-cell.player {
+  border-color: #00ffee;
+  background: rgba(0,255,238,.16);
+}
+
+.firewall-cell.player span {
+  position: absolute;
+  inset: 25%;
+  border-radius: 50%;
+  background: #00ffee;
+}
+
+.firewall-footer {
+  color: #8ff;
+}
+
+.alarm-screen {
+  color: #ff0055;
+  text-align: center;
+}
+
+.alarm-screen h1 {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 58px);
+  text-transform: uppercase;
+}
+
+.connection-panel {
+  display: grid;
+  gap: 12px;
+  text-align: center;
+}
+
+.connection-fill {
+  background: linear-gradient(90deg, #00ffee, #ffea70);
+}
+
+.desktop-reveal {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background: #00ffee;
+  animation: desktop-reveal 760ms ease-out both;
+}
+
+@keyframes desktop-reveal {
+  0% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
 }

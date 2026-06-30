@@ -1,0 +1,57 @@
+<div class="shard-hack" [class.locked]="phase() === 'locked'">
+  <div class="terminal-head">
+    <span>SHARD CACHE AUTH</span>
+    <span>{{ attempts() }} ATTEMPTS</span>
+  </div>
+
+  <div class="download" *ngIf="phase() === 'downloading' || phase() === 'complete'">
+    <div class="download-label">downloading shard</div>
+    <div class="download-track">
+      <div class="download-fill" [style.width.%]="downloadProgress()"></div>
+    </div>
+    <div class="download-percent">{{ downloadProgress() }}%</div>
+  </div>
+
+  <div class="boot" *ngIf="phase() === 'booting'">
+    INITIALIZING TERMLINK...
+  </div>
+
+  <div class="terminal-grid" *ngIf="phase() !== 'booting'">
+    <div class="memory">
+      <div class="memory-line" *ngFor="let line of lines()">
+        <span class="address">{{ line.address }}</span>
+        <ng-container *ngFor="let token of line.tokens">
+          <button
+            *ngIf="token.kind !== 'junk'; else junkToken"
+            type="button"
+            class="token"
+            [class.word]="token.kind === 'word'"
+            [class.bracket]="token.kind === 'bracket'"
+            [class.used]="token.used"
+            [disabled]="phase() !== 'playing' || token.used"
+            (pointerdown)="$event.stopPropagation()"
+            (click)="selectToken(token)"
+          >
+            {{ token.text }}
+          </button>
+          <ng-template #junkToken>
+            <span class="junk">{{ token.text }}</span>
+          </ng-template>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="history">
+      <div *ngFor="let line of log()">{{ line }}</div>
+      <button
+        *ngIf="phase() === 'locked'"
+        type="button"
+        class="retry"
+        (pointerdown)="$event.stopPropagation()"
+        (click)="reset()"
+      >
+        RETRY TERMLINK
+      </button>
+    </div>
+  </div>
+</div>

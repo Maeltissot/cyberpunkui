@@ -253,6 +253,93 @@ export class MessageBoardService {
         }
     ];
 
+    readonly privateUsersLevel2: PrivateUser[] = [
+        {
+            ip: '10.13.37.203',
+            name: 'K.Rad',
+            alias: 'KRAD-LOCAL',
+            info: 'Local workstation message cache. Recent exchange flagged as relevant.',
+            conversation: [
+                {
+                    from: 'KRAD-LOCAL',
+                    to: 'NIGHTCLERK',
+                    text: 'You still seeing those shard-cache pings on the workstation?'
+                },
+                {
+                    from: 'NIGHTCLERK',
+                    to: 'KRAD-LOCAL',
+                    text: 'Yeah. Every few minutes. Something keeps trying to package the same archive.'
+                },
+                {
+                    from: 'KRAD-LOCAL',
+                    to: 'NIGHTCLERK',
+                    text: 'Leave it alone for now. If the wrong person opens it, the lock should slow them down.'
+                },
+                {
+                    from: 'NIGHTCLERK',
+                    to: 'KRAD-LOCAL',
+                    text: 'That sounds like a terrible plan.'
+                }
+            ]
+        },
+        {
+            ip: '10.13.37.204',
+            name: 'Rin Vale',
+            alias: 'VALE-SWITCH',
+            info: 'Internal relay operator. Message board contains routing chatter.',
+            conversation: [
+                {
+                    from: 'VALE-SWITCH',
+                    to: 'DOCK-THREE',
+                    text: 'Route is unstable. I can keep the line open for six minutes, maybe seven.'
+                },
+                {
+                    from: 'DOCK-THREE',
+                    to: 'VALE-SWITCH',
+                    text: 'We only need four. Push the logs through and drop the handshake.'
+                },
+                {
+                    from: 'VALE-SWITCH',
+                    to: 'DOCK-THREE',
+                    text: 'Copy. If this burns, I was never on this channel.'
+                },
+                {
+                    from: 'DOCK-THREE',
+                    to: 'VALE-SWITCH',
+                    text: 'Relax. It is just a dead archive and a nervous workstation.'
+                }
+            ]
+        },
+        {
+            ip: '10.13.37.205',
+            name: 'Orchid Null',
+            alias: 'ORCHID-NULL',
+            info: 'Unknown sender. Conversation shows repeated access requests.',
+            conversation: [
+                {
+                    from: 'ORCHID-NULL',
+                    to: 'KRAD-LOCAL',
+                    text: 'I need the access phrase again. The old one failed.'
+                },
+                {
+                    from: 'KRAD-LOCAL',
+                    to: 'ORCHID-NULL',
+                    text: 'No. If you lost it, wait for the next handoff.'
+                },
+                {
+                    from: 'ORCHID-NULL',
+                    to: 'KRAD-LOCAL',
+                    text: 'The next handoff may be too late. Something is awake on the subnet.'
+                },
+                {
+                    from: 'KRAD-LOCAL',
+                    to: 'ORCHID-NULL',
+                    text: 'Then stop knocking before it notices both of us.'
+                }
+            ]
+        }
+    ];
+
     activeConversation =
         signal<MessageBoardConversation | null>(null);
 
@@ -356,7 +443,10 @@ export class MessageBoardService {
         const normalizedIp =
             ip.trim().toLowerCase();
 
-        return this.privateUsersLevel1.find(user =>
+        return [
+            ...this.privateUsersLevel1,
+            ...this.privateUsersLevel2
+        ].find(user =>
             user.ip.toLowerCase() === normalizedIp
         ) ?? null;
     }

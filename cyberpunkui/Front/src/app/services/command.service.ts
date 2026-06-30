@@ -35,6 +35,7 @@ interface LevelOneEndpoint {
 export class CommandService {
 
     private readonly levelTwoDesktopIp = '10.13.37.200';
+    private readonly levelTwoRogueAiIp = '10.13.37.666';
 
     private readonly levelOneEndpoints: LevelOneEndpoint[] = [
         {
@@ -83,7 +84,7 @@ export class CommandService {
 
     get commands(): TerminalCommandMap {
         return {
-            ...this.commonCommands,
+            ...this.availableCommonCommands,
             ...this.levelCommands[this.game.level()],
             ...this.privateUserCommands,
             ...this.hiddenCommands
@@ -92,9 +93,22 @@ export class CommandService {
 
     visibleCommandNames(): string[] {
         return [
-            ...Object.keys(this.commonCommands),
+            ...Object.keys(this.availableCommonCommands),
             ...Object.keys(this.levelCommands[this.game.level()])
         ].sort();
+    }
+
+    private get availableCommonCommands(): TerminalCommandMap {
+        if (this.game.level() !== 'level-2') {
+            return this.commonCommands;
+        }
+
+        const {
+            status,
+            ...commands
+        } = this.commonCommands;
+
+        return commands;
     }
 
     private get privateUserCommands(): TerminalCommandMap {
@@ -319,73 +333,9 @@ export class CommandService {
                 );
             },
 
-            enterin: async () => {
-                await this.emitTerminalEvent(
-                    TextTerminalEvent,
-                    'INITIALIZING INVESTIGATION LINK...',
-                    10
-                );
-
-                this.game.setScene('investigation');
-            },
-            scanin: () => {
-                this.investigation.runCommand('scanin');
-            },
-
-            decryptin: () => {
-                this.investigation.runCommand('decryptin');
-            },
-            
-            
-
             scan: async (args) => {
                 await this.runScanCommand(args);
-            },
-
-            hack: async () => {
-                await this.emitTerminalEvent(
-                    TextTerminalEvent,
-                    'INITIATING INTRUSION...',
-                    10
-                );
-
-                setTimeout(async () => {
-                    await this.emitTerminalEvent(
-                        TextTerminalEvent,
-                        'PATTERN MODULE READY',
-                        10
-                    );
-                }, 800);
-            },
-            daemons: async () => {
-                await this.emitTerminalEvent(
-                    TextTerminalEvent,
-                    'DAEMON SLOT SEQUENCER READY',
-                    10
-                );
-
-                this.game.setScene('daemonSequencer');
-            },
-
-            firewall: async () => {
-                await this.emitTerminalEvent(
-                    TextTerminalEvent,
-                    'TRACE FIREWALL CHASE LOADED',
-                    10
-                );
-
-                this.game.setScene('traceFirewall');
-            },
-
-            social: async () => {
-                await this.emitTerminalEvent(
-                    TextTerminalEvent,
-                    'SOCIAL ENGINEERING CHANNEL OPEN',
-                    10
-                );
-
-                this.game.setScene('socialHack');
-            },
+            }
         }
     };
 
@@ -411,7 +361,7 @@ export class CommandService {
 
                 await this.emitTerminalEvent(
                     TextTerminalEvent,
-                    '- scan [NETWORKNAME]: scans the network for potential ICE.',
+                    '- scan: scans the network. Optional targets: network, ice, ports.',
                     10
                 );
                 return;
@@ -509,17 +459,7 @@ export class CommandService {
         args: string[]
     ) {
         const target =
-            args[0];
-
-        if (!target) {
-            await this.emitTerminalEvent(
-                TextTerminalEvent,
-                'USAGE: scan [target]',
-                10
-            );
-
-            return;
-        }
+            args[0] ?? 'network';
 
         await this.emitTerminalEvent(
             TextTerminalEvent,
@@ -543,7 +483,7 @@ export class CommandService {
             case 'network':
                 await this.emitTerminalEvent(
                     TextTerminalEvent,
-                    '3 HOSTS DETECTED',
+                    '7 HOSTS DETECTED',
                     10
                 );
                 await this.emitTerminalEvent(
@@ -551,6 +491,19 @@ export class CommandService {
                     ` - ${this.levelTwoDesktopIp} | CORP WORKSTATION / DESKTOP`,
                     10
                 );
+                await this.emitTerminalEvent(
+                    TextTerminalEvent,
+                    ` - ${this.levelTwoRogueAiIp} | Rogue AI detected on network, enter to try to extract information`,
+                    10
+                );
+                for (const user of this.messageBoard.privateUsersLevel2) {
+                    await this.emitTerminalEvent(
+                        TextTerminalEvent,
+                        ` - ${user.ip} | MESSAGE BOARD / ${user.alias}
+    ${user.info}`,
+                        10
+                    );
+                }
                 break;
 
             case 'ice':
@@ -744,6 +697,27 @@ export class CommandService {
                 'USAGE: connect [IP]',
                 10
             );
+            return;
+        }
+
+        if (ip === this.levelTwoRogueAiIp) {
+            await this.emitTerminalEvent(
+                TextTerminalEvent,
+                `CONNECTING: ROGUE AI @ ${this.levelTwoRogueAiIp}`,
+                10
+            );
+
+            this.game.setScene('socialHack');
+            return;
+        }
+
+        const user =
+            this.messageBoard.privateUsersLevel2.find(item =>
+                item.ip.toLowerCase() === ip.toLowerCase()
+            );
+
+        if (user) {
+            await this.openPrivateConversation(user.ip);
             return;
         }
 

@@ -1,25 +1,91 @@
 <div class="desktop">
-
   <div class="scanlines"></div>
 
-  <div class="icons">
+  <section class="login-screen" *ngIf="phase() === 'login'">
+    <form class="login-panel" (ngSubmit)="submitPassword()">
+      <div class="login-header">
+        <span>REMOTE USER</span>
+        <strong>{{ loginUser }}</strong>
+      </div>
 
-    <div
-      class="icon"
-      [class.revealed-hidden]="file.hidden"
-      *ngFor="let file of filesystem.visibleRoot()"
-      (dblclick)="open(file)"
-    >
-      <div class="folder-icon"></div>
-      <span>{{ file.name }}</span>
+      <label for="desktop-password">PASSWORD</label>
+      <input
+        id="desktop-password"
+        name="desktopPassword"
+        type="password"
+        autocomplete="off"
+        [(ngModel)]="enteredPassword"
+      />
+
+      <button type="submit">ENTER</button>
+      <p>{{ loginMessage() }}</p>
+    </form>
+  </section>
+
+  <section class="firewall-screen" *ngIf="phase() === 'firewall'">
+    <div class="firewall-hud">
+      <span>FIREWALL COUNTERMEASURE</span>
+      <span>{{ firewallMessage() }}</span>
+      <span>TRACE {{ firewallTrace() }}/{{ maxTrace }}</span>
     </div>
 
-  </div>
+    <div class="trace-track">
+      <div class="trace-fill" [style.width.%]="firewallTrace()"></div>
+    </div>
 
-  <app-window
-    *ngFor="let window of windowManager.windows()"
-    [window]="window"
-  >
-  </app-window>
+    <div class="firewall-grid">
+      <button
+        type="button"
+        class="firewall-cell"
+        *ngFor="let cell of firewallCells()"
+        [class.blocked]="cell.blocked"
+        [class.player]="isFirewallPlayer(cell)"
+        [class.target]="isFirewallTarget(cell)"
+        [class.swept]="isFirewallSwept(cell)"
+      >
+        <span *ngIf="isFirewallPlayer(cell)"></span>
+      </button>
+    </div>
 
+    <div class="firewall-footer">ARROW KEYS / BREACH VECTOR TO EXIT NODE</div>
+  </section>
+
+  <section class="alarm-screen" *ngIf="phase() === 'alarm'">
+    <h1>Attempt detected, alarm raised</h1>
+  </section>
+
+  <section class="connecting-screen" *ngIf="phase() === 'connecting'">
+    <div class="connection-panel">
+      <div>CONNECTING TO {{ loginUser }}</div>
+      <div class="connection-track">
+        <div class="connection-fill" [style.width.%]="connectionProgress()"></div>
+      </div>
+      <div>{{ connectionProgress() }}%</div>
+    </div>
+  </section>
+
+  <ng-container *ngIf="phase() === 'desktop'">
+    <div class="desktop-reveal"></div>
+
+    <div class="icons">
+      <div
+        class="icon"
+        [class.revealed-hidden]="file.hidden"
+        [class.locked-folder]="file.type === 'locked-folder'"
+        *ngFor="let file of filesystem.visibleRoot()"
+        (dblclick)="open(file)"
+      >
+        <div class="folder-icon"></div>
+        <span>{{ file.name }}</span>
+      </div>
+    </div>
+
+    <div class="window-layer">
+      <app-window
+        *ngFor="let window of windowManager.windows()"
+        [window]="window"
+      >
+      </app-window>
+    </div>
+  </ng-container>
 </div>

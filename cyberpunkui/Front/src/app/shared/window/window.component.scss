@@ -1,5 +1,7 @@
 .window {
   position: absolute;
+  z-index: 1;
+  pointer-events: auto;
 
   top: 120px;
   left: 220px;
@@ -21,6 +23,8 @@
 }
 
 .titlebar {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,6 +50,8 @@
 }
 
 .content {
+  position: relative;
+  z-index: 1;
   padding: 20px;
 
   white-space: pre-wrap;

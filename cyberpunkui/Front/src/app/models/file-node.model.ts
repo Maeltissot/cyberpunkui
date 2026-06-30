@@ -3,6 +3,7 @@ export interface FileNode {
   name: string;
   type:
   | 'folder'
+  | 'locked-folder'
   | 'text'
   | 'hack'
   | 'decrypt'

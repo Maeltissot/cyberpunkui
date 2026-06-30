@@ -83,6 +83,35 @@ export class FilesystemService {
         ]
     },
     {
+      id: 'shard-cache',
+      name: 'SHARD_CACHE',
+      type: 'locked-folder',
+      hidden: true,
+      children: [
+        {
+          id: 'shard-cache-manifest',
+          name: 'SHARD_MANIFEST.txt',
+          type: 'text',
+          content: `
+            DOWNLOADED SHARD // LOCAL COPY
+
+            Access token accepted.
+            Archive fragment recovered from secured memory.
+          `
+        },
+        {
+          id: 'shard-cache-log',
+          name: 'TRANSFER_LOG.txt',
+          type: 'text',
+          content: `
+            00:00 handshaking with shard index
+            00:04 decrypting carrier blocks
+            00:09 download complete
+          `
+        }
+      ]
+    },
+    {
         id: 'decrypt-1',
         name: 'MEMORY_FRAGMENT.enc',
         type: 'decrypt',
